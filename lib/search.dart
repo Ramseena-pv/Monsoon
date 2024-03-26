@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:monsoon/favourites.dart';
+import 'package:monsoon/home.dart';
+import 'package:monsoon/profile.dart';
 
 class SearchScreen extends StatelessWidget {
   const SearchScreen({Key? key}) : super(key: key);
@@ -60,10 +63,25 @@ class SearchScreen extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _buildIcon('assets/images/Home.png'),
+              _buildIcon('assets/images/Home.png', () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Home()),
+                );
+              }),
               _buildIcon('assets/images/Search (1).png'),
-              _buildIcon('assets/images/Love.png'),
-              _buildIcon('assets/images/User.png'),
+              _buildIcon('assets/images/Love.png', () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Home()),
+                );
+              }),
+              _buildIcon('assets/images/User.png', () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => Profile()),
+                );
+              }),
             ],
           ),
         ),
@@ -135,16 +153,19 @@ class SearchScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildIcon(String assetName) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Container(
-        width: 30,
-        height: 30,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(assetName),
-            fit: BoxFit.contain,
+  Widget _buildIcon(String assetName, [VoidCallback? onTap]) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Container(
+          width: 30,
+          height: 30,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(assetName),
+              fit: BoxFit.contain,
+            ),
           ),
         ),
       ),

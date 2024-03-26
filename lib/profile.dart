@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:monsoon/favourites.dart';
+import 'package:monsoon/home.dart';
+import 'package:monsoon/search.dart';
 
 class Profile extends StatelessWidget {
-  const Profile({super.key});
+  const Profile({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +34,7 @@ class Profile extends StatelessWidget {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(left: 20, bottom: 40, right: 20),
-        child: _buildBottomNavigationBar(),
+        child: _buildBottomNavigationBar(context),
       ),
     );
   }
@@ -144,7 +147,7 @@ class Profile extends StatelessWidget {
     );
   }
 
-  Widget _buildBottomNavigationBar() {
+  Widget _buildBottomNavigationBar(BuildContext context) {
     return Container(
       width: 370,
       height: 50,
@@ -157,25 +160,48 @@ class Profile extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          _buildIcon('assets/images/Home.png'),
-          _buildIcon('assets/images/Search (1).png'),
-          _buildIcon('assets/images/Love.png'),
-          _buildIcon('assets/images/User.png'),
+          _buildIcon('assets/images/Home.png', () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Home()),
+            );
+          }),
+          _buildIcon('assets/images/Search (1).png',  () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SearchScreen()),
+            );
+          }),
+          _buildIcon('assets/images/Love.png', () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Favourites()),
+            );
+          }),
+          _buildIcon('assets/images/User.png',() {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Profile()),
+            );
+          }),
         ],
       ),
     );
   }
 
-  Widget _buildIcon(String assetName) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Container(
-        width: 30,
-        height: 30,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(assetName),
-            fit: BoxFit.contain,
+  Widget _buildIcon(String assetName, void Function() onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Container(
+          width: 30,
+          height: 30,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(assetName),
+              fit: BoxFit.contain,
+            ),
           ),
         ),
       ),
